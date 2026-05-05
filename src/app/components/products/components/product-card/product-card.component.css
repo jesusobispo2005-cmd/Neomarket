@@ -19,3 +19,19 @@
 .info {
   padding: 10px;
 }
+.btn-ver {
+  margin-top: 10px;
+  width: 100%;
+  padding: 10px;
+  background: black;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.btn-ver:hover {
+  background: #333;
+}

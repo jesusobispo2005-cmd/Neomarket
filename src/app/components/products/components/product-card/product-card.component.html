@@ -1,16 +1,16 @@
-<div class="card">
+<div *ngIf="product" class="card">
 
   <img
+    *ngIf="product.Imagenes?.length"
     [src]="'http://localhost:3000/uploads/img/' + product.Imagenes[0]"
   />
 
   <div class="info">
-    <h3>{{ product.Nombre }}</h3>
+    <h2>{{ product.Nombre }}</h2>
     <p>{{ product.Descripcion }}</p>
+    <h3>{{ product.Precio }} €</h3>
 
-    <strong>{{ product.Precio }} €</strong>
-
-    <button>Ver producto</button>
+    <button class="btn-ver" (click)="viewProduct()">Ver producto →</button>
   </div>
 
 </div>

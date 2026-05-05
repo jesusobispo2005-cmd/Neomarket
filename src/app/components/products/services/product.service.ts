@@ -13,7 +13,7 @@ export class ProductService {
   }
 
   getById(id: string) {
-    return this.http.get(`${this.api}/${id}`);
+    return this.http.get(`http://localhost:3000/api/productos/${id}`);
   }
 
   getByName(nombre: string) {
@@ -31,4 +31,5 @@ export class ProductService {
   delete(id: string) {
     return this.http.delete(`${this.api}/${id}`);
   }
+  
 }

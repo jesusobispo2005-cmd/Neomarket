@@ -1,16 +1,9 @@
-<div class="detail" *ngIf="product">
+<div *ngIf="product" class="detail">
 
-  <img
-    [src]="'http://localhost:3000/uploads/img/' + product.Imagenes[0]"
-  />
+  <img [src]="'http://localhost:3000/uploads/img/' + product.Imagenes[0]" />
 
-  <div class="info">
-    <h1>{{ product.Nombre }}</h1>
-    <p>{{ product.Descripcion }}</p>
-
-    <h2>{{ product.Precio }} €</h2>
-
-    <button>Añadir al carrito</button>
-  </div>
+  <h1>{{ product.Nombre }}</h1>
+  <p>{{ product.Descripcion }}</p>
+  <h2>{{ product.Precio }} €</h2>
 
 </div>
