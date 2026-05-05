@@ -1,0 +1,12 @@
+<app-product-filter
+  (filterChange)="onFilterChange($event)">
+</app-product-filter>
+
+<div class="grid">
+
+  <app-product-card
+    *ngFor="let p of filteredProducts"
+    [product]="p">
+  </app-product-card>
+
+</div>

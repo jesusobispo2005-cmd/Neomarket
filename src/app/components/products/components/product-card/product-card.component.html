@@ -1,0 +1,16 @@
+<div class="card">
+
+  <img
+    [src]="'http://localhost:3000/uploads/img/' + product.Imagenes[0]"
+  />
+
+  <div class="info">
+    <h3>{{ product.Nombre }}</h3>
+    <p>{{ product.Descripcion }}</p>
+
+    <strong>{{ product.Precio }} €</strong>
+
+    <button>Ver producto</button>
+  </div>
+
+</div>
