@@ -1,15 +1,18 @@
 <div *ngIf="product" class="card">
 
-  <img
-    *ngIf="product.Imagenes?.length"
-    [src]="'http://localhost:3000/uploads/img/' + product.Imagenes[0]"
-  />
+  <div class="img-wrapper">
+    <img
+      *ngIf="product.Imagenes?.length"
+      [src]="'http://localhost:3000/uploads/img/' + product.Imagenes[0]"
+      [alt]="product.Nombre"
+    />
+    <div *ngIf="!product.Imagenes?.length" class="no-img">Sin imagen</div>
+  </div>
 
   <div class="info">
     <h2>{{ product.Nombre }}</h2>
     <p>{{ product.Descripcion }}</p>
     <h3>{{ product.Precio }} €</h3>
-
     <button class="btn-ver" (click)="viewProduct()">Ver producto →</button>
   </div>
 

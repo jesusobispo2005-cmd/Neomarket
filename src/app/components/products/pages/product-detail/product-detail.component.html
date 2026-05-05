@@ -1,9 +1,68 @@
-<div *ngIf="product" class="detail">
+<div *ngIf="!product" class="loading">
+  Cargando producto...
+</div>
 
-  <img [src]="'http://localhost:3000/uploads/img/' + product.Imagenes[0]" />
+<div *ngIf="product" class="product-detail">
 
-  <h1>{{ product.Nombre }}</h1>
-  <p>{{ product.Descripcion }}</p>
-  <h2>{{ product.Precio }} €</h2>
+  <!-- Izquierda: imagen -->
+  <div class="left">
+    <div class="img-wrapper">
+      <img
+        *ngIf="product.Imagenes?.length"
+        [src]="'http://localhost:3000/uploads/img/' + product.Imagenes[0]"
+        [alt]="product.Nombre"
+        class="main-img"
+      />
+      <div *ngIf="!product.Imagenes?.length" class="no-img">Sin imagen</div>
+    </div>
+  </div>
+
+  <!-- Derecha: info -->
+  <div class="right">
+
+    <h1 class="title">{{ product.Nombre }}</h1>
+
+    <div class="prices">
+      <span class="price">{{ product.Precio }} €</span>
+      <span class="old-price" *ngIf="product.Descuento">
+        {{ product.Precio / (1 - product.Descuento / 100) | number:'1.2-2' }} €
+      </span>
+    </div>
+
+    <hr />
+
+    <p class="desc">{{ product.Descripcion }}</p>
+
+    <div class="tags" *ngIf="product.Etiquetas?.length">
+      <span class="tag" *ngFor="let tag of product.Etiquetas">{{ tag }}</span>
+    </div>
+
+    <hr />
+
+    <div class="stock" *ngIf="product.Stock > 0">
+      ✅ En stock ({{ product.Stock }} unidades)
+    </div>
+    <div class="stock out" *ngIf="product.Stock === 0">
+      ❌ Sin stock
+    </div>
+
+    <!-- Cantidad -->
+    <div class="quantity-row">
+      <span>Cantidad</span>
+      <div class="quantity">
+        <button (click)="decrement()">-</button>
+        <span>{{ cantidad }}</span>
+        <button (click)="increment()">+</button>
+      </div>
+    </div>
+
+    <!-- Botones -->
+    <div class="actions">
+      <button class="buy-btn" [disabled]="product.Stock === 0">
+        Añadir al carrito
+      </button>
+    </div>
+
+  </div>
 
 </div>

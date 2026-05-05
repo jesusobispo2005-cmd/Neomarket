@@ -13,6 +13,7 @@ import { ProductService } from '../../services/product.service';
 export class ProductDetailComponent implements OnInit {
 
   product: any = null;
+  cantidad: number = 1;
 
   constructor(
     private route: ActivatedRoute,
@@ -21,23 +22,15 @@ export class ProductDetailComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-
-    // 🔥 IMPORTANTE: reutiliza cambios de ruta
     this.route.paramMap.subscribe(params => {
-
       const id = params.get('id');
-
-      console.log('ID recibido:', id);
-
       if (!id) return;
 
-      this.product = null; // reset visual
+      this.product = null;
+      this.cantidad = 1;
 
       this.productService.getById(id).subscribe({
         next: (res: any) => {
-          console.log('PRODUCTO OK:', res);
-
-          // 🔥 CLAVE: forzar cambio de referencia Angular
           this.product = structuredClone(res);
           this.cdr.detectChanges();
         },
@@ -45,7 +38,18 @@ export class ProductDetailComponent implements OnInit {
           console.error('ERROR:', err);
         }
       });
-
     });
+  }
+
+  increment() {
+    if (this.cantidad < this.product.Stock) {
+      this.cantidad++;
+    }
+  }
+
+  decrement() {
+    if (this.cantidad > 1) {
+      this.cantidad--;
+    }
   }
 }
