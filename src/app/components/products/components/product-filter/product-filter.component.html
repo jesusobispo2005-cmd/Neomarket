@@ -1,0 +1,20 @@
+<div class="filter">
+
+  <input
+    type="text"
+    placeholder="Buscar producto..."
+    [(ngModel)]="searchText"
+    (input)="onSearchChange()"
+  />
+
+  <select
+    [(ngModel)]="category"
+    (change)="onCategoryChange()"
+  >
+    <option value="">Todas</option>
+    <option value="ropa">Ropa</option>
+    <option value="electronica">Electrónica</option>
+    <option value="hogar">Hogar</option>
+  </select>
+
+</div>

@@ -1,0 +1,14 @@
+.detail {
+  display: flex;
+  gap: 40px;
+  padding: 40px;
+}
+
+.detail img {
+  width: 400px;
+  border-radius: 10px;
+}
+
+.info {
+  max-width: 500px;
+}
