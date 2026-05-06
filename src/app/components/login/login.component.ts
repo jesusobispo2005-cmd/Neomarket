@@ -2,6 +2,7 @@ import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LoginService } from './login.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,10 @@ import { LoginService } from './login.service';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
+  private router = inject(Router);
+
   constructor(private loginService: LoginService) {}
+  
 
   Nombre = signal('');
   Apellidos = signal('');
@@ -44,9 +48,11 @@ export class LoginComponent {
         this.Password.set('');
         this.Direccion.set('');
         this.Birthdate.set('');
+        window.alert('Registration successful! You can now log in with your credentials.');
       },
       (error: any) => {
         console.error('Registration failed:', error);
+        window.alert('Registration failed. Please try again.');
       },
     );
   }
@@ -60,15 +66,18 @@ export class LoginComponent {
       (response: any) => {
         console.log('Login successful:', response);
         // Handle successful login, e.g., store token, redirect, etc.
-        localStorage.setItem('Token', response.data.token);
-        localStorage.setItem('Email', response.data.usuario.Email);
-        localStorage.setItem('Admin', response.data.usuario.Admin);
+        localStorage.setItem('Token', response.token);
+        localStorage.setItem('Email', response.foundUser.Email);
+        localStorage.setItem('Admin', response.foundUser.Admin.toString());
         console.log('Token stored in localStorage:', localStorage.getItem('Token'));
         console.log('Email stored in localStorage:', localStorage.getItem('Email'));
         console.log('Admin status stored in localStorage:', localStorage.getItem('Admin'));
+        window.alert('Login successful! Welcome back.');
+        this.router.navigate(['/']);
       },
       (error: any) => {
         console.error('Login failed:', error);
+        window.alert('Login failed. Please check your credentials.');
       },
     );
   }
