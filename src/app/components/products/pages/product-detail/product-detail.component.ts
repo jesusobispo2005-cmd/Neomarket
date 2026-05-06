@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../services/product.service';
+import { CartService } from '../../../../services/cart.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -18,6 +19,7 @@ export class ProductDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
+    private cartService: CartService,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -34,22 +36,20 @@ export class ProductDetailComponent implements OnInit {
           this.product = structuredClone(res);
           this.cdr.detectChanges();
         },
-        error: (err) => {
-          console.error('ERROR:', err);
-        }
+        error: (err) => console.error('ERROR:', err)
       });
     });
   }
 
   increment() {
-    if (this.cantidad < this.product.Stock) {
-      this.cantidad++;
-    }
+    if (this.cantidad < this.product.Stock) this.cantidad++;
   }
 
   decrement() {
-    if (this.cantidad > 1) {
-      this.cantidad--;
-    }
+    if (this.cantidad > 1) this.cantidad--;
+  }
+
+  addToCart() {
+    this.cartService.addToCart(this.product, this.cantidad);
   }
 }

@@ -28,6 +28,10 @@ export class ProductService {
     return this.http.put(`${this.api}/${id}`, data);
   }
 
+  updateStock(id: string, nuevoStock: number) {
+    return this.http.patch(`${this.api}/${id}/stock`, { Stock: nuevoStock });
+  }
+
   delete(id: string) {
     return this.http.delete(`${this.api}/${id}`);
   }

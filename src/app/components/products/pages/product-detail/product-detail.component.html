@@ -58,7 +58,7 @@
 
     <!-- Botones -->
     <div class="actions">
-      <button class="buy-btn" [disabled]="product.Stock === 0">
+      <button class="buy-btn" [disabled]="product.Stock === 0" (click)="addToCart()">
         Añadir al carrito
       </button>
     </div>
