@@ -1,7 +1,27 @@
-<nav>
-  <a routerLink="">Home</a>
-  <a routerLink="login">Login</a>
-  <a routerLink="register">Register</a>
-</nav>
+<div class="app-wrapper">
 
-<router-outlet></router-outlet>
+  <nav class="navbar">
+
+    <div class="nav-brand">
+      <span class="brand-icon">⚡</span>
+      <span class="brand-name">NeoMarket</span>
+    </div>
+
+    <div class="nav-links">
+      <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+      <a routerLink="login" routerLinkActive="active">Login</a>
+      <a routerLink="register" routerLinkActive="active">Register</a>
+
+      <a routerLink="carrito" class="cart-btn" routerLinkActive="active">
+        <span class="cart-icon">🛒</span>
+        <span class="cart-badge">0</span>
+      </a>
+
+      <div class="avatar">U</div>
+    </div>
+
+  </nav>
+
+  <router-outlet></router-outlet>
+
+</div>
