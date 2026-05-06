@@ -47,7 +47,7 @@ export class LoginComponent {
       },
       (error: any) => {
         console.error('Registration failed:', error);
-      }
+      },
     );
   }
 
@@ -60,10 +60,16 @@ export class LoginComponent {
       (response: any) => {
         console.log('Login successful:', response);
         // Handle successful login, e.g., store token, redirect, etc.
+        localStorage.setItem('Token', response.data.token);
+        localStorage.setItem('Email', response.data.usuario.Email);
+        localStorage.setItem('Admin', response.data.usuario.Admin);
+        console.log('Token stored in localStorage:', localStorage.getItem('Token'));
+        console.log('Email stored in localStorage:', localStorage.getItem('Email'));
+        console.log('Admin status stored in localStorage:', localStorage.getItem('Admin'));
       },
       (error: any) => {
         console.error('Login failed:', error);
-      }
+      },
     );
   }
 }
