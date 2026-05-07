@@ -1,0 +1,35 @@
+.perfil-container{
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+    margin-left: 50px;
+    gap:10px;
+}
+
+.perfil-btn {
+  flex: 1;
+  padding: 14px;
+  background: #1a7abf;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.actions{
+    display: flex;
+    gap: 20px;
+    width: 500px;
+}
+
+.perfil-btn:hover {
+  background: #155f99;
+}
+
+.perfil-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}

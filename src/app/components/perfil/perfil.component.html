@@ -1,13 +1,20 @@
-<h1>Perfil</h1>
-<h3>Nombre</h3>
-<p name="Nombre" placeholder="Name"></p>
-<h3>Apellidos</h3>
-<p name="Apellidos" placeholder="Surname"></p>
-<h3>Telefono</h3>
-<p name="Telefono" placeholder="Phone number"></p>
-<h3>Email</h3>
-<p name="Email" placeholder="Email"></p>
-<h3>Direccion</h3>
-<p name="Direccion" placeholder="Address"></p>
-<h3>Birthdate</h3>
-<p name="Birthdate" placeholder="Birthdate"></p>
+<div class="perfil-container">
+  <h1>Perfil</h1>
+  <h3>Nombre</h3>
+  <p name="Nombre" placeholder="Name">{{ Nombre() }}</p>
+  <h3>Apellidos</h3>
+  <p name="Apellidos" placeholder="Surname">{{ Apellidos() }}</p>
+  <h3>Telefono</h3>
+  <p name="Telefono" placeholder="Phone number">{{ Telefono() }}</p>
+  <h3>Email</h3>
+  <p name="Email" placeholder="Email">{{ Email() }}</p>
+  <h3>Direccion</h3>
+  <p name="Direccion" placeholder="Address">{{ Direccion() }}</p>
+  <h3>Birthdate</h3>
+  <p name="Birthdate" placeholder="Birthdate">{{ Birthdate() }}</p>
+
+  <div class="actions">
+    <button class="perfil-btn">Editar perfil</button>
+    <button class="perfil-btn">Ver lista de deseos</button>
+  </div>
+</div>

@@ -26,15 +26,15 @@ export class PerfilComponent {
       this.router.navigate(['/login']);
       return;
     } else {
-      this.perfilService.getByEmail(localStorage.getItem('Email')?.toString() || '').subscribe(
+      this.perfilService.getByEmail(localStorage.getItem('Email') || '').subscribe(
         (response: any) => {
           // Reset form
-          this.Nombre.set(response.Nombre || '');
-          this.Apellidos.set(response.Apellidos || '');
-          this.Telefono.set(response.Telefono || '');
-          this.Email.set(response.Email || '');
-          this.Direccion.set(response.Direccion || '');
-          this.Birthdate.set(response.Birthdate || '');
+          this.Nombre.set(response.Nombre || 'ERROR');
+          this.Apellidos.set(response.Apellidos || 'ERROR');
+          this.Telefono.set(response.Telefono || 'ERROR');
+          this.Email.set(response.Email || 'ERROR');
+          this.Direccion.set(response.Direccion || 'ERROR');
+          this.Birthdate.set(response.Birthdate || 'ERROR');
         },
         (error: any) => {
           console.error('Something wrong:', error);

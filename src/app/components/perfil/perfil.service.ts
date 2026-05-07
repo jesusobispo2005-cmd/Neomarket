@@ -10,6 +10,6 @@ export class PerfilService {
   constructor(private http: HttpClient) {}
 
   getByEmail(Email: string) {
-    return this.http.get(`${this.api}/Email=${Email}`);
+    return this.http.get(`${this.api}/${Email}`);
   }
 }
