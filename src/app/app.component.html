@@ -2,7 +2,7 @@
 
   <nav class="navbar">
 
-    <div routerLink="" routerLinkActive="active" class="nav-brand">
+    <div class="nav-brand">
       <span class="brand-icon">⚡</span>
       <span class="brand-name">NeoMarket</span>
     </div>
@@ -10,13 +10,21 @@
     <div class="nav-links">
       <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
       <a routerLink="login" routerLinkActive="active">Login</a>
+      <a routerLink="register" routerLinkActive="active">Register</a>
 
-      <a routerLink="carrito" class="cart-btn" routerLinkActive="active">
-        <span class="cart-icon">🛒</span>
-        <span class="cart-badge">{{ cartCount }}</span>
+      <!-- Wishlist -->
+      <a routerLink="wishlist" class="icon-btn" routerLinkActive="active" title="Wishlist">
+        <span>❤️</span>
+        <span class="nav-badge" *ngIf="wishlistCount > 0">{{ wishlistCount }}</span>
       </a>
 
-      <div routerLink="perfil" routerLinkActive="active" class="avatar">U</div>
+      <!-- Carrito -->
+      <a routerLink="carrito" class="icon-btn" routerLinkActive="active" title="Carrito">
+        <span class="cart-icon">🛒</span>
+        <span class="nav-badge" *ngIf="cartCount > 0">{{ cartCount }}</span>
+      </a>
+
+      <div class="avatar">U</div>
     </div>
 
   </nav>
