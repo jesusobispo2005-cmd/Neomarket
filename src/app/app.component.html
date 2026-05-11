@@ -10,7 +10,6 @@
     <div class="nav-links">
       <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
       <a routerLink="login" routerLinkActive="active">Login</a>
-      <a routerLink="register" routerLinkActive="active">Register</a>
 
       <!-- Wishlist -->
       <a routerLink="wishlist" class="icon-btn" routerLinkActive="active" title="Wishlist">
@@ -24,7 +23,7 @@
         <span class="nav-badge" *ngIf="cartCount > 0">{{ cartCount }}</span>
       </a>
 
-      <div class="avatar">U</div>
+      <div routerLink="perfil" routerLinkActive="active" class="avatar">U</div>
     </div>
 
   </nav>
