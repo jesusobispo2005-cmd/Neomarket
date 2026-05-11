@@ -1,0 +1,56 @@
+<div class="wishlist-page">
+
+  <div class="wishlist-header">
+    <h1>❤️ Tu Wishlist</h1>
+    <span class="item-count" *ngIf="items.length > 0">{{ items.length }} producto{{ items.length !== 1 ? 's' : '' }}</span>
+  </div>
+
+  <!-- Vacía -->
+  <div *ngIf="items.length === 0" class="empty">
+    <div class="empty-icon">🤍</div>
+    <h2>Tu wishlist está vacía</h2>
+    <p>Guarda los productos que te gusten para no perderlos de vista</p>
+    <a routerLink="" class="browse-btn">Explorar productos →</a>
+  </div>
+
+  <!-- Grid de productos -->
+  <div *ngIf="items.length > 0" class="wishlist-grid">
+    <div class="wish-card" *ngFor="let product of items">
+
+      <!-- Botón eliminar -->
+      <button class="remove-btn" (click)="remove(product._id)" title="Quitar de wishlist">✕</button>
+
+      <!-- Imagen -->
+      <div class="card-img" (click)="viewProduct(product._id)">
+        <img
+          *ngIf="product.Imagenes?.length"
+          [src]="'http://localhost:3000/uploads/img/' + product.Imagenes[0]"
+          [alt]="product.Nombre"
+        />
+        <div *ngIf="!product.Imagenes?.length" class="no-img">Sin imagen</div>
+        <div class="out-of-stock" *ngIf="product.Stock === 0">Sin stock</div>
+      </div>
+
+      <!-- Info -->
+      <div class="card-info">
+        <h3 (click)="viewProduct(product._id)">{{ product.Nombre }}</h3>
+        <p class="desc">{{ product.Descripcion }}</p>
+
+        <div class="card-footer">
+          <span class="price">{{ product.Precio | number:'1.2-2' }} €</span>
+          <button
+            class="add-cart-btn"
+            [class.added]="addedToCart[product._id]"
+            [disabled]="product.Stock === 0"
+            (click)="addToCart(product)"
+          >
+            <span *ngIf="!addedToCart[product._id]">🛒 Añadir</span>
+            <span *ngIf="addedToCart[product._id]">✓ Añadido</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>

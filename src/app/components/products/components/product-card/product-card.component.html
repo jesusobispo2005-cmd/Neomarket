@@ -7,6 +7,16 @@
       [alt]="product.Nombre"
     />
     <div *ngIf="!product.Imagenes?.length" class="no-img">Sin imagen</div>
+
+    <!-- Botón Wishlist -->
+    <button
+      class="wish-btn"
+      [class.active]="wishlistService.isInWishlist(product._id)"
+      (click)="toggleWishlist($event)"
+      [title]="wishlistService.isInWishlist(product._id) ? 'Quitar de wishlist' : 'Añadir a wishlist'"
+    >
+      {{ wishlistService.isInWishlist(product._id) ? '❤️' : '🤍' }}
+    </button>
   </div>
 
   <div class="info">

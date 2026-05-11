@@ -112,3 +112,25 @@
   box-shadow: 0 0 20px rgba(168,85,247,0.6);
   transform: scale(1.05);
 }
+/* Icon nav buttons (wishlist, carrito) */
+.icon-btn {
+  position: relative;
+  padding: 8px 12px !important;
+  font-size: 18px !important;
+}
+
+.nav-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: #a855f7;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -9,37 +9,117 @@
 
   <div *ngIf="items.length > 0" class="cart-content">
 
-    <div class="cart-items">
-      <div class="cart-item" *ngFor="let item of items">
+    <!-- COLUMNA IZQUIERDA: items + pago -->
+    <div class="cart-left">
 
-        <div class="item-img">
-          <img
-            *ngIf="item.product.Imagenes?.length"
-            [src]="'http://localhost:3000/uploads/img/' + item.product.Imagenes[0]"
-            [alt]="item.product.Nombre"
+      <!-- Productos -->
+      <div class="cart-items">
+        <div class="cart-item" *ngFor="let item of items">
+          <div class="item-img">
+            <img
+              *ngIf="item.product.Imagenes?.length"
+              [src]="'http://localhost:3000/uploads/img/' + item.product.Imagenes[0]"
+              [alt]="item.product.Nombre"
+            />
+          </div>
+          <div class="item-info">
+            <h3>{{ item.product.Nombre }}</h3>
+            <p>{{ item.product.Precio | number:'1.2-2' }} € × {{ item.cantidad }}</p>
+          </div>
+          <div class="item-total">{{ item.product.Precio * item.cantidad | number:'1.2-2' }} €</div>
+          <button class="remove-btn" (click)="remove(item.product._id)">✕</button>
+        </div>
+      </div>
+
+      <!-- Código de descuento -->
+      <div class="discount-section">
+        <p class="section-label">🏷️ Código de descuento</p>
+        <div *ngIf="!descuentoAplicado" class="discount-row">
+          <input
+            type="text"
+            [(ngModel)]="codigoDescuento"
+            placeholder="Ej: NEO10"
+            class="discount-input"
           />
+          <button class="discount-btn" (click)="aplicarCodigo()">Aplicar</button>
+        </div>
+        <div *ngIf="codigoError" class="discount-error">{{ codigoError }}</div>
+        <div *ngIf="descuentoAplicado" class="discount-ok">
+          ✅ Código aplicado: –{{ descuentoPorcentaje }}%
+          <button class="quitar-btn" (click)="quitarDescuento()">Quitar</button>
+        </div>
+      </div>
+
+      <!-- Métodos de pago -->
+      <div class="payment-section">
+        <p class="section-label">💳 Método de pago</p>
+
+        <div class="payment-options">
+
+          <!-- Cartera digital -->
+          <div class="payment-card" [class.selected]="metodoPago === 'cartera'" (click)="seleccionarMetodo('cartera')">
+            <span class="pay-icon">👛</span>
+            <span>Cartera digital</span>
+            <span class="check" *ngIf="metodoPago === 'cartera'">✓</span>
+          </div>
+
+          <!-- Visa -->
+          <div class="payment-card" [class.selected]="metodoPago === 'visa'" (click)="seleccionarMetodo('visa')">
+            <span class="pay-icon">💳</span>
+            <span>Pagar con Visa</span>
+            <span class="check" *ngIf="metodoPago === 'visa'">✓</span>
+          </div>
+
         </div>
 
-        <div class="item-info">
-          <h3>{{ item.product.Nombre }}</h3>
-          <p>{{ item.product.Precio }} € x {{ item.cantidad }}</p>
+        <!-- Formulario Cartera -->
+        <div *ngIf="metodoPago === 'cartera'" class="pay-form">
+          <div class="form-row">
+            <label>Email de la cartera</label>
+            <input type="email" [(ngModel)]="carteraEmail" placeholder="tu@email.com" />
+          </div>
+          <div class="form-row">
+            <label>PIN (4 dígitos)</label>
+            <input type="password" [(ngModel)]="carteraPin" placeholder="••••" maxlength="4" />
+          </div>
         </div>
 
-        <div class="item-total">
-          {{ item.product.Precio * item.cantidad | number:'1.2-2' }} €
+        <!-- Formulario Visa -->
+        <div *ngIf="metodoPago === 'visa'" class="pay-form">
+          <div class="form-row">
+            <label>Nombre en la tarjeta</label>
+            <input type="text" [(ngModel)]="visaNombre" placeholder="NOMBRE APELLIDO" />
+          </div>
+          <div class="form-row">
+            <label>Número de tarjeta</label>
+            <input type="text" [(ngModel)]="visaNumero" placeholder="1234 5678 9012 3456" maxlength="19" />
+          </div>
+          <div class="form-row-half">
+            <div class="form-row">
+              <label>Caducidad</label>
+              <input type="text" [(ngModel)]="visaCaducidad" placeholder="MM/AA" maxlength="5" />
+            </div>
+            <div class="form-row">
+              <label>CVV</label>
+              <input type="password" [(ngModel)]="visaCvv" placeholder="•••" maxlength="3" />
+            </div>
+          </div>
         </div>
-
-        <button class="remove-btn" (click)="remove(item.product._id)">✕</button>
 
       </div>
     </div>
 
+    <!-- COLUMNA DERECHA: resumen -->
     <div class="cart-summary">
       <h2>Resumen</h2>
       <hr />
       <div class="summary-row">
         <span>Subtotal</span>
-        <span>{{ getTotal() | number:'1.2-2' }} €</span>
+        <span>{{ getSubtotal() | number:'1.2-2' }} €</span>
+      </div>
+      <div class="summary-row" *ngIf="descuentoAplicado">
+        <span>Descuento (–{{ descuentoPorcentaje }}%)</span>
+        <span class="discount-amount">–{{ getDescuentoImporte() | number:'1.2-2' }} €</span>
       </div>
       <div class="summary-row">
         <span>Envío</span>
@@ -50,8 +130,23 @@
         <span>Total</span>
         <span>{{ getTotal() | number:'1.2-2' }} €</span>
       </div>
-      <button class="pay-btn" (click)="pagar()" [disabled]="pagando"> {{ pagando ? 'Procesando...' : 'Pagar ahora' }}
-</button>
+
+      <button
+        class="pay-btn"
+        (click)="pagar()"
+        [disabled]="pagando || !formularioValido()"
+        [class.disabled]="!formularioValido()"
+      >
+        <span *ngIf="!pagando">
+          {{ metodoPago === 'cartera' ? '👛' : metodoPago === 'visa' ? '💳' : '🔒' }}
+          {{ pagando ? 'Procesando...' : 'Confirmar pago' }}
+        </span>
+        <span *ngIf="pagando">⏳ Procesando...</span>
+      </button>
+
+      <p class="pay-hint" *ngIf="!metodoPago">Selecciona un método de pago para continuar</p>
+
+      <a routerLink="" class="back-link">← Seguir comprando</a>
     </div>
 
   </div>
