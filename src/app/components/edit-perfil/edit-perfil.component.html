@@ -1,0 +1,14 @@
+<h1>Editar perfil</h1>
+<form class="form border-line" (ngSubmit)="userEdit()">
+  <h3>Nombre</h3>
+  <input class="inputForm" type="text" name="Nombre" [(ngModel)]="Nombre" />
+  <h3>Apellidos</h3>
+  <input class="inputForm" type="text" name="Apellidos" [(ngModel)]="Apellidos" />
+  <h3>Telefono</h3>
+  <input class="inputForm" type="text" name="Telefono" [(ngModel)]="Telefono" />
+  <h3>Direccion</h3>
+  <input class="inputForm" type="text" name="Direccion" [(ngModel)]="Direccion" />
+  <h3>Birthdate</h3>
+  <input class="inputForm" type="text" name="Birthdate" [(ngModel)]="Birthdate" />
+  <button class="button-submit">Edit</button>
+</form>

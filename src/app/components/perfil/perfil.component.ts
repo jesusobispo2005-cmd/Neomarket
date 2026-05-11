@@ -42,4 +42,9 @@ export class PerfilComponent {
       );
     }
   }
+
+  goEdit(){
+    this.router.navigate(['/edit-perfil']);
+  }
+
 }
