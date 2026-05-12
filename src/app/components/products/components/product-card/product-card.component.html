@@ -12,7 +12,7 @@
     <button
       class="wish-btn"
       [class.active]="wishlistService.isInWishlist(product._id)"
-      (click)="toggleWishlist($event)"
+      (click)="wishlistItem($event)"
       [title]="wishlistService.isInWishlist(product._id) ? 'Quitar de wishlist' : 'Añadir a wishlist'"
     >
       {{ wishlistService.isInWishlist(product._id) ? '❤️' : '🤍' }}

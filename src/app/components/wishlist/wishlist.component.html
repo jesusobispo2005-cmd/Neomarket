@@ -2,11 +2,11 @@
 
   <div class="wishlist-header">
     <h1>❤️ Tu Wishlist</h1>
-    <span class="item-count" *ngIf="items.length > 0">{{ items.length }} producto{{ items.length !== 1 ? 's' : '' }}</span>
+    <span class="item-count" *ngIf="wishlistItems().length > 0">{{ wishlistItems().length }} producto{{ wishlistItems().length !== 1 ? 's' : '' }}</span>
   </div>
 
   <!-- Vacía -->
-  <div *ngIf="items.length === 0" class="empty">
+  <div *ngIf="wishlistItems().length === 0" class="empty">
     <div class="empty-icon">🤍</div>
     <h2>Tu wishlist está vacía</h2>
     <p>Guarda los productos que te gusten para no perderlos de vista</p>
@@ -14,8 +14,8 @@
   </div>
 
   <!-- Grid de productos -->
-  <div *ngIf="items.length > 0" class="wishlist-grid">
-    <div class="wish-card" *ngFor="let product of items">
+  <div *ngIf="wishlistItems().length > 0" class="wishlist-grid">
+    <div class="wish-card" *ngFor="let product of wishlistItems()">
 
       <!-- Botón eliminar -->
       <button class="remove-btn" (click)="remove(product._id)" title="Quitar de wishlist">✕</button>
