@@ -1,0 +1,215 @@
+<div class="admin-page">
+
+  <!-- ── HEADER ── -->
+  <div class="admin-header">
+    <div class="header-left">
+      <h1>
+        <span *ngIf="vista === 'lista'">⚙️ Panel de Admin</span>
+        <span *ngIf="vista === 'crear'">➕ Nuevo producto</span>
+        <span *ngIf="vista === 'editar'">✏️ Editar producto</span>
+      </h1>
+      <span class="prod-count" *ngIf="vista === 'lista'">{{ productos.length }} productos</span>
+    </div>
+    <div class="header-right">
+      <button *ngIf="vista === 'lista'" class="btn-primary" (click)="irACrear()">
+        + Añadir producto
+      </button>
+      <button *ngIf="vista !== 'lista'" class="btn-back" (click)="irALista()">
+        ← Volver
+      </button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       VISTA: LISTA
+  ══════════════════════════════════════════════════════ -->
+  <div *ngIf="vista === 'lista'">
+
+    <div *ngIf="cargando" class="loading">Cargando productos...</div>
+
+    <div *ngIf="!cargando && productos.length === 0" class="empty">
+      <p>No hay productos todavía.</p>
+      <button class="btn-primary" (click)="irACrear()">Crear el primero</button>
+    </div>
+
+    <div *ngIf="!cargando && productos.length > 0" class="tabla-wrapper">
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>Imagen</th>
+            <th>Nombre</th>
+            <th>Categoría</th>
+            <th>Precio</th>
+            <th>Descuento</th>
+            <th>Stock</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of productos" [class.fila-confirmar]="confirmandoId === p._id">
+
+            <td class="td-img">
+              <img
+                *ngIf="p.Imagenes?.length"
+                [src]="'http://localhost:3000/uploads/img/' + p.Imagenes[0]"
+                [alt]="p.Nombre"
+              />
+              <div *ngIf="!p.Imagenes?.length" class="no-img-small">—</div>
+            </td>
+
+            <td class="td-nombre">
+              <span class="nombre">{{ p.Nombre }}</span>
+              <span class="desc-preview">{{ p.Descripcion | slice:0:60 }}{{ p.Descripcion?.length > 60 ? '…' : '' }}</span>
+            </td>
+
+            <td><span class="badge-cat">{{ p.Categoria }}</span></td>
+
+            <td class="td-precio">
+              <span *ngIf="p.Descuento > 0">
+                <span class="precio-original">{{ p.Precio | number:'1.2-2' }} €</span>
+                <span class="precio-final">{{ getPrecioConDescuento(p.Precio, p.Descuento) | number:'1.2-2' }} €</span>
+              </span>
+              <span *ngIf="!p.Descuento || p.Descuento === 0" class="precio-final">{{ p.Precio | number:'1.2-2' }} €</span>
+            </td>
+
+            <td>
+              <span class="badge-desc" *ngIf="p.Descuento > 0">–{{ p.Descuento }}%</span>
+              <span class="sin-desc" *ngIf="!p.Descuento || p.Descuento === 0">—</span>
+            </td>
+
+            <td>
+              <span class="stock-ok" *ngIf="p.Stock > 5">{{ p.Stock }}</span>
+              <span class="stock-low" *ngIf="p.Stock > 0 && p.Stock <= 5">{{ p.Stock }} ⚠️</span>
+              <span class="stock-out" *ngIf="p.Stock === 0">Sin stock</span>
+            </td>
+
+            <!-- Acciones normales -->
+            <td class="td-acciones" *ngIf="confirmandoId !== p._id">
+              <button class="btn-edit" (click)="irAEditar(p)">Editar</button>
+              <button class="btn-delete" (click)="pedirConfirmacion(p._id)">Eliminar</button>
+            </td>
+
+            <!-- Confirmación eliminar -->
+            <td class="td-confirmar" *ngIf="confirmandoId === p._id">
+              <span class="confirmar-txt">¿Eliminar?</span>
+              <button class="btn-confirm-yes" (click)="eliminar(p._id)">Sí</button>
+              <button class="btn-confirm-no" (click)="cancelarConfirmacion()">No</button>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       VISTA: FORMULARIO (crear / editar)
+  ══════════════════════════════════════════════════════ -->
+  <div *ngIf="vista === 'crear' || vista === 'editar'" class="form-wrapper">
+
+    <div class="form-grid">
+
+      <!-- COLUMNA IZQUIERDA -->
+      <div class="form-left">
+
+        <div class="form-group">
+          <label>Nombre <span class="req">*</span></label>
+          <input type="text" [(ngModel)]="form.Nombre" placeholder="Nombre del producto" />
+        </div>
+
+        <div class="form-group">
+          <label>Descripción <span class="req">*</span></label>
+          <textarea [(ngModel)]="form.Descripcion" rows="4" placeholder="Descripción del producto"></textarea>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Precio (€) <span class="req">*</span></label>
+            <input type="number" [(ngModel)]="form.Precio" placeholder="0.00" min="0" step="0.01" />
+          </div>
+          <div class="form-group">
+            <label>Stock <span class="req">*</span></label>
+            <input type="number" [(ngModel)]="form.Stock" placeholder="0" min="0" step="1" />
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Categoría <span class="req">*</span></label>
+            <select [(ngModel)]="form.Categoria">
+              <option value="">Seleccionar...</option>
+              <option *ngFor="let cat of categorias" [value]="cat">{{ cat }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Descuento (%)</label>
+            <input type="number" [(ngModel)]="form.Descuento" placeholder="0" min="0" max="100" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Etiquetas <span class="hint">(separadas por coma)</span></label>
+          <input type="text" [(ngModel)]="form.Etiquetas" placeholder="Ej: nuevo, oferta, destacado" />
+        </div>
+
+      </div>
+
+      <!-- COLUMNA DERECHA: imágenes -->
+      <div class="form-right">
+
+        <div class="form-group">
+          <label>Imágenes</label>
+          <div class="upload-zone" (click)="fileInput.click()">
+            <span class="upload-icon">📷</span>
+            <p>Haz clic para subir imágenes</p>
+            <p class="upload-hint">PNG, JPG hasta 5MB cada una</p>
+            <input
+              #fileInput
+              type="file"
+              accept="image/*"
+              multiple
+              hidden
+              (change)="onImagenesChange($event)"
+            />
+          </div>
+        </div>
+
+        <!-- Previews -->
+        <div *ngIf="previewUrls.length > 0" class="previews">
+          <div class="preview-item" *ngFor="let url of previewUrls">
+            <img [src]="url" alt="Preview" />
+          </div>
+        </div>
+
+        <!-- Preview precio con descuento -->
+        <div class="precio-preview" *ngIf="form.Precio > 0">
+          <p class="preview-label">Vista previa precio</p>
+          <div *ngIf="form.Descuento > 0">
+            <span class="precio-tachado">{{ form.Precio | number:'1.2-2' }} €</span>
+            <span class="precio-rebajado">{{ getPrecioConDescuento(form.Precio, form.Descuento) | number:'1.2-2' }} €</span>
+            <span class="badge-desc">–{{ form.Descuento }}%</span>
+          </div>
+          <div *ngIf="!form.Descuento || form.Descuento === 0">
+            <span class="precio-rebajado">{{ form.Precio | number:'1.2-2' }} €</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Botones -->
+    <div class="form-actions">
+      <button class="btn-back" (click)="irALista()">Cancelar</button>
+      <button
+        class="btn-primary"
+        [disabled]="guardando || !formularioValido()"
+        (click)="vista === 'crear' ? crear() : guardarEdicion()"
+      >
+        <span *ngIf="!guardando">{{ vista === 'crear' ? '✓ Crear producto' : '✓ Guardar cambios' }}</span>
+        <span *ngIf="guardando">Guardando...</span>
+      </button>
+    </div>
+
+  </div>
+
+</div>

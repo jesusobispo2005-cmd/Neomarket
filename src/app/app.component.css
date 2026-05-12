@@ -134,3 +134,36 @@
   align-items: center;
   justify-content: center;
 }
+.admin-link {
+  background: rgba(168, 85, 247, 0.12) !important;
+  border: 1px solid rgba(168, 85, 247, 0.25) !important;
+  color: rgba(255,255,255,0.85) !important;
+}
+.admin-link:hover {
+  background: rgba(168, 85, 247, 0.25) !important;
+  color: white !important;
+}
+.admin-link.active {
+  background: rgba(168, 85, 247, 0.3) !important;
+  color: white !important;
+}
+
+.admin-link {
+  background: rgba(168, 85, 247, 0.12) !important;
+  border: 1px solid rgba(168, 85, 247, 0.25) !important;
+  color: rgba(255,255,255,0.85) !important;
+}
+.admin-link:hover { background: rgba(168, 85, 247, 0.25) !important; color: white !important; }
+.admin-link.active { background: rgba(168, 85, 247, 0.3) !important; color: white !important; }
+
+.logout-btn {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.5);
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.logout-btn:hover { color: white; border-color: rgba(255,255,255,0.35); }
