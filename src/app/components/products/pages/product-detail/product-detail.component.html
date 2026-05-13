@@ -23,10 +23,14 @@
     <h1 class="title">{{ product.Nombre }}</h1>
 
     <div class="prices">
-      <span class="price">{{ product.Precio }} €</span>
-      <span class="old-price" *ngIf="product.Descuento">
-        {{ product.Precio / (1 - product.Descuento / 100) | number:'1.2-2' }} €
-      </span>
+      <!-- Sin descuento -->
+      <span class="price" *ngIf="!product.Descuento">{{ product.Precio }} €</span>
+
+      <!-- Con descuento: tachado + rebajado -->
+      <ng-container *ngIf="product.Descuento">
+        <span class="old-price">{{ product.Precio | number:'1.2-2' }} €</span>
+        <span class="price">{{ product.Precio * (1 - product.Descuento / 100) | number:'1.2-2' }} €</span>
+      </ng-container>
     </div>
 
     <hr />

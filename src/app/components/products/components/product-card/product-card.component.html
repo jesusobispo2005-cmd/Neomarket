@@ -8,6 +8,8 @@
     />
     <div *ngIf="!product.Imagenes?.length" class="no-img">Sin imagen</div>
 
+    <span class="discount-badge" *ngIf="product.Descuento">-{{ product.Descuento }}%</span>
+
     <button
       class="wish-btn"
       [class.active]="enWishlist"
@@ -21,7 +23,18 @@
   <div class="info">
     <h2>{{ product.Nombre }}</h2>
     <p>{{ product.Descripcion }}</p>
-    <h3>{{ product.Precio }} €</h3>
+
+    <div class="price-row">
+      <!-- Sin descuento: precio normal -->
+      <h3 *ngIf="!product.Descuento">{{ product.Precio }} €</h3>
+
+      <!-- Con descuento: tachado + rebajado -->
+      <ng-container *ngIf="product.Descuento">
+        <span class="old-price">{{ product.Precio | number:'1.2-2' }} €</span>
+        <h3>{{ product.Precio * (1 - product.Descuento / 100) | number:'1.2-2' }} €</h3>
+      </ng-container>
+    </div>
+
     <button class="btn-ver" (click)="verProducto()">Ver producto →</button>
   </div>
 

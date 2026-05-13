@@ -30,7 +30,12 @@ export class CartService {
   }
 
   getTotal() {
-    return this.items.reduce((acc, i) => acc + i.product.Precio * i.cantidad, 0);
+    return this.items.reduce((acc, i) => {
+    const precio = i.product.Descuento
+      ? i.product.Precio * (1 - i.product.Descuento / 100)
+      : i.product.Precio;
+    return acc + precio * i.cantidad;
+  }, 0);
   }
 
   getCount() {
