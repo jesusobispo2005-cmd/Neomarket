@@ -1,7 +1,8 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { WishlistService } from '../../../../services/wishlist.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product-card',
@@ -10,62 +11,39 @@ import { WishlistService } from '../../../../services/wishlist.service';
   templateUrl: './product-card.component.html',
   styleUrls: ['./product-card.component.css'],
 })
-export class ProductCardComponent {
+export class ProductCardComponent implements OnInit, OnDestroy {
   @Input() product: any;
+
+  enWishlist = false;
+  private sub!: Subscription;
 
   constructor(
     private router: Router,
-    public wishlistService: WishlistService,
+    private wishlistService: WishlistService,
   ) {}
 
-  Wishlist = signal<any[]>([]);
+  ngOnInit() {
+    // Se suscribe al observable: cada vez que cambia la wishlist, recalcula
+    this.sub = this.wishlistService.wishlist$.subscribe(() => {
+      this.enWishlist = this.wishlistService.estaEnWishlist(this.product._id);
+    });
+  }
 
-  viewProduct() {
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
+
+  verProducto() {
     this.router.navigate(['/producto', this.product._id]);
   }
-  /*
+
   toggleWishlist(event: Event) {
     event.stopPropagation();
-    this.wishlistService.toggle(this.product);
-  }
-*/
-
-  async wishlistItem(event: Event) {
-    if (!localStorage.getItem('Email')) {
-      console.log('No email found in localStorage. Redirecting to login page.');
+    const email = localStorage.getItem('Email');
+    if (!email) {
       this.router.navigate(['/login']);
       return;
-    } else {
-      await this.wishlistService.getByEmail(localStorage.getItem('Email') || '').subscribe(
-        (response: any) => {
-          // Reset form
-          console.log('Wishlist response:', response.Wishlist);
-          this.Wishlist.set(response.Wishlist || []);
-
-          let fakeWishlist = this.Wishlist();
-          console.log('First Wishlist:', fakeWishlist);
-          fakeWishlist.push(this.product);
-          console.log('Current Wishlist:', fakeWishlist);
-          this.Wishlist.set(fakeWishlist);
-
-          this.wishlistService
-            .updateWishlist(localStorage.getItem('Email') || '', { Wishlist: this.Wishlist() })
-            .subscribe(
-              (response: any) => {
-                console.log('Wishlist updated successfully:', response);
-              },
-              (error: any) => {
-                console.error('Something wrong:', error);
-              },
-            );
-
-          event.stopPropagation();
-          this.wishlistService.toggle(this.product);
-        },
-        (error: any) => {
-          console.error('Something wrong:', error);
-        },
-      );
     }
+    this.wishlistService.toggle(email, this.product);
   }
 }

@@ -8,14 +8,13 @@
     />
     <div *ngIf="!product.Imagenes?.length" class="no-img">Sin imagen</div>
 
-    <!-- Botón Wishlist -->
     <button
       class="wish-btn"
-      [class.active]="wishlistService.isInWishlist(product._id)"
-      (click)="wishlistItem($event)"
-      [title]="wishlistService.isInWishlist(product._id) ? 'Quitar de wishlist' : 'Añadir a wishlist'"
+      [class.active]="enWishlist"
+      (click)="toggleWishlist($event)"
+      [title]="enWishlist ? 'Quitar de wishlist' : 'Añadir a wishlist'"
     >
-      {{ wishlistService.isInWishlist(product._id) ? '❤️' : '🤍' }}
+      {{ enWishlist ? '❤️' : '🤍' }}
     </button>
   </div>
 
@@ -23,7 +22,7 @@
     <h2>{{ product.Nombre }}</h2>
     <p>{{ product.Descripcion }}</p>
     <h3>{{ product.Precio }} €</h3>
-    <button class="btn-ver" (click)="viewProduct()">Ver producto →</button>
+    <button class="btn-ver" (click)="verProducto()">Ver producto →</button>
   </div>
 
 </div>
