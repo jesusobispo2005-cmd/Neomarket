@@ -1,9 +1,17 @@
-.perfil-container{
-    display: flex;
-    flex-direction: column;
-    margin-top: 50px;
-    margin-left: 50px;
-    gap:10px;
+.perfil-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #ffffff;
+  padding: 30px;
+  width: 40%;
+  border-radius: 20px;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+    'Helvetica Neue', sans-serif;
+  margin-top: 20px;
+  justify-self: center;
+  gap: 20px;
 }
 
 .perfil-btn {
@@ -19,10 +27,10 @@
   transition: 0.3s;
 }
 
-.actions{
-    display: flex;
-    gap: 20px;
-    width: 500px;
+.actions {
+  display: flex;
+  gap: 20px;
+  width: 500px;
 }
 
 .perfil-btn:hover {
