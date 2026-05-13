@@ -10,3 +10,7 @@ input, select {
   border: 1px solid #ddd;
   border-radius: 8px;
 }
+
+.buscador {
+  width: 60%;
+}

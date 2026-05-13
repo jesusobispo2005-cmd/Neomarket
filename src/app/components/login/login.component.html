@@ -1,7 +1,7 @@
 <div class="flex-row-center">
   <!-- LOGIN FORM -->
   <div class="flex-column-top">
-    <h3>Login</h3>
+    <h1>Login</h1>
     <form class="form border-line" (ngSubmit)="userLogin()">
       <div class="flex-column">
         <label>Email </label>
@@ -50,24 +50,24 @@
 
   <!-- REGISTER FORM -->
   <div class="flex-column-top">
-    <h3>Register</h3>
+    <h1>Register</h1>
     <form class="form border-line"  (ngSubmit)="userRegister()">
       <div class="flex-row">
         <div class="flex-column">
-          <label>Nombre </label>
+          <label>Nombre</label>
           <div class="inputForm">
               <input name="Nombre" type="text" class="input" placeholder="Enter your name" [(ngModel)]="Nombre" />
             </div>
         </div>
         <div class="flex-column">
-          <label>Apellidos </label>
+          <label>Apellidos</label>
           <div class="inputForm">
               <input name="Apellidos" type="text" class="input" placeholder="Enter your surname" [(ngModel)]="Apellidos" />
             </div>
         </div>
       </div>
       <div class="flex-column">
-        <label>Telefono </label>
+        <label>Telefono</label>
       </div>
       <div class="inputForm">
         <svg viewBox="0 0 512 512" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
@@ -80,7 +80,7 @@
         <input name="Telefono" type="number" class="input" placeholder="Enter your phone number" [(ngModel)]="Telefono" />
       </div>
       <div class="flex-column">
-        <label>Email </label>
+        <label>Email</label>
       </div>
       <div class="inputForm">
         <svg height="20" viewBox="0 0 32 32" width="20" xmlns="http://www.w3.org/2000/svg">
@@ -93,7 +93,7 @@
         <input name="Email" type="text" class="input" placeholder="Enter your Email" [(ngModel)]="Email" />
       </div>
       <div class="flex-column">
-        <label>Password </label>
+        <label>Password</label>
       </div>
       <div class="inputForm">
         <svg height="20" viewBox="-64 0 512 512" width="20" xmlns="http://www.w3.org/2000/svg">
@@ -112,13 +112,13 @@
         </svg>
       </div>
       <div class="flex-column">
-        <label>Direccion </label>
+        <label>Direccion</label>
       </div>
       <div class="inputForm">
         <input name="Direccion" type="text" class="input" placeholder="Enter your address" [(ngModel)]="Direccion" />
       </div>
       <div class="flex-column">
-        <label>Fecha de nacimiento </label>
+        <label>Fecha de nacimiento</label>
       </div>
       <div class="inputForm">
         <input name="Birthdate" type="date" class="input" placeholder="Enter your birth date" [(ngModel)]="Birthdate" />
