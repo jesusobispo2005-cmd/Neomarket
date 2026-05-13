@@ -27,7 +27,7 @@ export class AdminComponent implements OnInit {
   previewUrls: string[] = [];
   productoEditandoId: string | null = null;
 
-  categorias = ['Electrónica', 'Ropa', 'Hogar', 'Deportes', 'Libros', 'Juguetes', 'Otros'];
+  categorias = ['Electronica', 'Ropa', 'Hogar', 'Deportes', 'Libros', 'Juguetes', 'Otros'];
 
   constructor(private productService: ProductService) {}
 
