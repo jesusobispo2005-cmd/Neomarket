@@ -1,56 +1,70 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class WishlistService {
 
   private api = 'http://localhost:3000/api/users';
+  private wishlistSubject = new BehaviorSubject<any[]>([]);
+  wishlist$ = this.wishlistSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
-  private items: any[] = [];
-  private wishlistSubject = new BehaviorSubject<any[]>([]);
-
-  wishlist$ = this.wishlistSubject.asObservable();
-
-  toggle(product: any) {
-    const idx = this.items.findIndex(p => p._id === product._id);
-    if (idx >= 0) {
-      this.items.splice(idx, 1);
-    } else {
-      this.items.push(product);
-    }
-    this.wishlistSubject.next([...this.items]);
+  // Carga la wishlist desde la BD y actualiza el estado interno
+  cargar(email: string): void {
+    this.http.get<any>(`${this.api}/${email}`).subscribe({
+      next: (res) => this.wishlistSubject.next(res.Wishlist || []),
+      error: () => {}
+    });
   }
 
-  isInWishlist(productId: string): boolean {
-    return this.items.some(p => p._id === productId);
+  // Devuelve si un producto está en la wishlist
+  estaEnWishlist(productId: string): boolean {
+    return this.wishlistSubject.value.some((p: any) => p._id === productId);
   }
 
-  remove(productId: string) {
-    this.items = this.items.filter(p => p._id !== productId);
-    this.wishlistSubject.next([...this.items]);
-  }
-
+  // Devuelve el número actual
   getCount(): number {
-    return this.items.length;
+    return this.wishlistSubject.value.length;
   }
 
-  getAll(): any[] {
-    return [...this.items];
+  // Añade o quita un producto y guarda en la BD
+  toggle(email: string, producto: any): void {
+    const actual = [...this.wishlistSubject.value];
+    const index = actual.findIndex((p: any) => p._id === producto._id);
+
+    if (index >= 0) {
+      actual.splice(index, 1);
+    } else {
+      actual.push(producto);
+    }
+
+    // Actualiza el estado local inmediatamente
+    this.wishlistSubject.next(actual);
+
+    // Persiste en la BD
+    this.http.put(`${this.api}/${email}/wishlist`, { Wishlist: actual }).subscribe({
+      error: () => {
+        // Si falla, recarga desde la BD para revertir
+        this.cargar(email);
+      }
+    });
   }
 
-  update(Email: string, data: any) {
-    return this.http.put(`${this.api}/${Email}`, data);
+  // Quita un producto y guarda en la BD
+  quitar(email: string, productId: string): void {
+    const actual = this.wishlistSubject.value.filter((p: any) => p._id !== productId);
+    this.wishlistSubject.next(actual);
+
+    this.http.put(`${this.api}/${email}/wishlist`, { Wishlist: actual }).subscribe({
+      error: () => this.cargar(email)
+    });
   }
 
-  getByEmail(Email: string) {
-    return this.http.get(`${this.api}/${Email}`);
+  // Limpia el estado al cerrar sesión
+  limpiar(): void {
+    this.wishlistSubject.next([]);
   }
-
-  updateWishlist(Email: string, data: any) {
-    return this.http.put(`${this.api}/${Email}/wishlist`, data);
-  }
-
 }

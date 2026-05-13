@@ -25,25 +25,33 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // Escucha cambios del carrito
     this.cartService.cart$.subscribe(() => {
       this.cartCount = this.cartService.getCount();
     });
-    this.wishlistService.wishlist$.subscribe(() => {
-      this.wishlistCount = this.wishlistService.getCount();
+
+    // Escucha cambios de la wishlist
+    this.wishlistService.wishlist$.subscribe(items => {
+      this.wishlistCount = items.length;
     });
 
-    // Actualizar estado admin/login cada vez que cambia la ruta
-    // (por si hace login/logout)
+    // Estado inicial de sesión
+    this.isLoggedIn = !!localStorage.getItem('Token');
+    this.isAdmin = localStorage.getItem('Admin') === 'true';
+
+    // Carga la wishlist si hay sesión activa al arrancar
+    const email = localStorage.getItem('Email');
+    if (email) {
+      this.wishlistService.cargar(email);
+    }
+
+    // Solo actualiza flags de sesión en cambios de ruta, sin recargar wishlist
     this.router.events.pipe(
       filter(e => e instanceof NavigationEnd)
     ).subscribe(() => {
       this.isLoggedIn = !!localStorage.getItem('Token');
       this.isAdmin = localStorage.getItem('Admin') === 'true';
     });
-
-    // Estado inicial
-    this.isLoggedIn = !!localStorage.getItem('Token');
-    this.isAdmin = localStorage.getItem('Admin') === 'true';
   }
 
   logout() {
@@ -52,6 +60,7 @@ export class AppComponent implements OnInit {
     localStorage.removeItem('Admin');
     this.isLoggedIn = false;
     this.isAdmin = false;
+    this.wishlistService.limpiar();
     this.router.navigate(['/']);
   }
 }
