@@ -4,7 +4,7 @@
 
 <div *ngIf="product" class="product-detail">
 
-  <!-- Izquierda: imagen -->
+  <!-- Izquierda: imagen + botón volver -->
   <div class="left">
     <div class="img-wrapper">
       <img
@@ -15,6 +15,10 @@
       />
       <div *ngIf="!product.Imagenes?.length" class="no-img">Sin imagen</div>
     </div>
+    <button class="back-btn" (click)="volver()">
+      <span class="back-arrow">←</span>
+      Volver
+    </button>
   </div>
 
   <!-- Derecha: info -->
@@ -23,10 +27,7 @@
     <h1 class="title">{{ product.Nombre }}</h1>
 
     <div class="prices">
-      <!-- Sin descuento -->
       <span class="price" *ngIf="!product.Descuento">{{ product.Precio }} €</span>
-
-      <!-- Con descuento: tachado + rebajado -->
       <ng-container *ngIf="product.Descuento">
         <span class="old-price">{{ product.Precio | number:'1.2-2' }} €</span>
         <span class="price">{{ product.Precio * (1 - product.Descuento / 100) | number:'1.2-2' }} €</span>
@@ -50,7 +51,6 @@
       ❌ Sin stock
     </div>
 
-    <!-- Cantidad -->
     <div class="quantity-row">
       <span>Cantidad</span>
       <div class="quantity">
@@ -60,10 +60,9 @@
       </div>
     </div>
 
-    <!-- Botones -->
     <div class="actions">
       <button class="buy-btn" [disabled]="product.Stock === 0" (click)="addToCart()">
-        Añadir al carrito
+        🛒 Añadir al carrito
       </button>
     </div>
 

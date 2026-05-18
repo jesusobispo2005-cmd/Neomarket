@@ -5,7 +5,6 @@
   font-family: 'Segoe UI', sans-serif;
 }
 
-/* ── HEADER ── */
 .admin-header {
   display: flex;
   align-items: center;
@@ -34,7 +33,6 @@
   border-radius: 20px;
 }
 
-/* ── BOTONES GLOBALES ── */
 .btn-primary {
   padding: 10px 22px;
   background: linear-gradient(135deg, #a855f7, #6366f1);
@@ -62,7 +60,6 @@
 }
 .btn-back:hover { border-color: #a855f7; color: #a855f7; }
 
-/* ── ESTADOS ── */
 .loading, .empty {
   text-align: center;
   padding: 80px 0;
@@ -74,7 +71,6 @@
   gap: 16px;
 }
 
-/* ── TABLA ── */
 .tabla-wrapper {
   background: white;
   border-radius: 14px;
@@ -113,7 +109,6 @@
 
 .tabla td { padding: 14px 16px; vertical-align: middle; }
 
-/* celdas especiales */
 .td-img { width: 70px; }
 .td-img img {
   width: 56px;
@@ -211,7 +206,6 @@
 }
 .btn-confirm-no:hover { background: #e5e7eb; }
 
-/* ── FORMULARIO ── */
 .form-wrapper {
   background: white;
   border-radius: 14px;
@@ -264,7 +258,6 @@
   gap: 16px;
 }
 
-/* upload zone */
 .upload-zone {
   border: 2px dashed #d1d5db;
   border-radius: 10px;
@@ -279,7 +272,6 @@
 .upload-zone p { margin: 4px 0; font-size: 14px; }
 .upload-hint { font-size: 12px !important; color: #bbb !important; }
 
-/* previews */
 .previews {
   display: flex;
   flex-wrap: wrap;
@@ -301,7 +293,6 @@
   padding: 4px;
 }
 
-/* precio preview */
 .precio-preview {
   margin-top: 20px;
   background: #fafafa;
@@ -312,7 +303,6 @@
 .precio-tachado { text-decoration: line-through; color: #bbb; font-size: 14px; margin-right: 8px; }
 .precio-rebajado { font-size: 22px; font-weight: 800; color: #111; margin-right: 8px; }
 
-/* form actions */
 .form-actions {
   display: flex;
   justify-content: flex-end;
@@ -320,4 +310,48 @@
   margin-top: 28px;
   padding-top: 24px;
   border-top: 1px solid #f3f4f6;
+}
+
+@media (max-width: 900px) {
+  .admin-page {
+    padding: 0 16px;
+    margin: 24px auto;
+  }
+
+  .admin-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .form-row-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .tabla-wrapper {
+    overflow-x: auto;
+  }
+
+  .tabla {
+    min-width: 700px;
+  }
+}
+
+@media (max-width: 560px) {
+  .form-wrapper {
+    padding: 20px 16px;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
 }

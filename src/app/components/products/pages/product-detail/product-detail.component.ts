@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import { ProductService } from '../../services/product.service';
 import { CartService } from '../../../../services/cart.service';
 
@@ -20,7 +21,8 @@ export class ProductDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService,
     private cartService: CartService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private location: Location
   ) {}
 
   ngOnInit() {
@@ -39,6 +41,10 @@ export class ProductDetailComponent implements OnInit {
         error: (err) => console.error('ERROR:', err)
       });
     });
+  }
+
+  volver() {
+    this.location.back();
   }
 
   increment() {

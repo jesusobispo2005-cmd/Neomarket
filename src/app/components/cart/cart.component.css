@@ -11,7 +11,6 @@
   margin-bottom: 30px;
 }
 
-/* --- EMPTY --- */
 .empty {
   text-align: center;
   padding: 80px 0;
@@ -25,7 +24,6 @@
   font-weight: 500;
 }
 
-/* --- LAYOUT --- */
 .cart-content {
   display: flex;
   gap: 30px;
@@ -39,7 +37,6 @@
   gap: 20px;
 }
 
-/* --- ITEMS --- */
 .cart-items {
   display: flex;
   flex-direction: column;
@@ -93,7 +90,6 @@
 }
 .remove-btn:hover { color: #e44; }
 
-/* --- SECTION LABEL --- */
 .section-label {
   font-size: 14px;
   font-weight: 700;
@@ -103,7 +99,6 @@
   letter-spacing: 0.04em;
 }
 
-/* --- DESCUENTO --- */
 .discount-section {
   background: white;
   border-radius: 12px;
@@ -162,7 +157,6 @@
 }
 .quitar-btn:hover { color: #e44; border-color: #e44; }
 
-/* --- PAYMENT --- */
 .payment-section {
   background: white;
   border-radius: 12px;
@@ -204,7 +198,6 @@
   font-weight: 700;
 }
 
-/* --- FORMULARIOS --- */
 .pay-form {
   display: flex;
   flex-direction: column;
@@ -246,7 +239,6 @@
 }
 .form-row-half .form-row { flex: 1; }
 
-/* --- SUMMARY --- */
 .cart-summary {
   flex: 1;
   background: white;
@@ -320,3 +312,48 @@ hr { border: none; border-top: 1px solid #eee; }
   font-weight: 500;
 }
 .back-link:hover { text-decoration: underline; }
+
+@media (max-width: 900px) {
+  .cart-content {
+    flex-direction: column;
+  }
+
+  .cart-summary {
+    position: static;
+    width: 100%;
+  }
+
+  .payment-options {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 560px) {
+  .cart-page {
+    padding: 0 16px;
+    margin: 24px auto;
+  }
+
+  .cart-title {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .cart-item {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .item-total {
+    min-width: unset;
+    flex: 1;
+  }
+
+  .form-row-half {
+    flex-direction: column;
+  }
+
+  .payment-card {
+    flex: 1 1 100%;
+  }
+}

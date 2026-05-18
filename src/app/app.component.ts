@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
   wishlistCount = 0;
   isAdmin = false;
   isLoggedIn = false;
+  menuAbierto = false;
 
   constructor(
     private cartService: CartService,
@@ -47,7 +48,12 @@ export class AppComponent implements OnInit {
     ).subscribe(() => {
       this.isLoggedIn = !!localStorage.getItem('Token');
       this.isAdmin = localStorage.getItem('Admin') === 'true';
+      this.menuAbierto = false;
     });
+  }
+
+  toggleMenu() {
+    this.menuAbierto = !this.menuAbierto;
   }
 
   logout() {
@@ -56,6 +62,7 @@ export class AppComponent implements OnInit {
     localStorage.removeItem('Admin');
     this.isLoggedIn = false;
     this.isAdmin = false;
+    this.menuAbierto = false;
     this.wishlistService.limpiar();
     this.router.navigate(['/']);
   }

@@ -5,7 +5,6 @@
   font-family: 'Segoe UI', sans-serif;
 }
 
-/* Header */
 .wishlist-header {
   display: flex;
   align-items: center;
@@ -28,7 +27,6 @@
   border-radius: 20px;
 }
 
-/* Empty */
 .empty {
   text-align: center;
   padding: 100px 0 80px;
@@ -80,14 +78,12 @@
   transform: translateY(-2px);
 }
 
-/* Grid */
 .wishlist-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 24px;
 }
 
-/* Card */
 .wish-card {
   background: white;
   border-radius: 14px;
@@ -103,7 +99,6 @@
   box-shadow: 0 10px 30px rgba(0,0,0,0.13);
 }
 
-/* Remove btn */
 .remove-btn {
   position: absolute;
   top: 10px;
@@ -129,7 +124,6 @@
   transform: scale(1.1);
 }
 
-/* Imagen */
 .card-img {
   width: 100%;
   height: 200px;
@@ -170,7 +164,6 @@
   letter-spacing: 0.04em;
 }
 
-/* Card info */
 .card-info {
   padding: 14px 16px 16px;
   display: flex;
@@ -234,4 +227,26 @@
 .add-cart-btn:disabled {
   background: #ccc;
   cursor: not-allowed;
+}
+
+@media (max-width: 560px) {
+  .wishlist-page {
+    padding: 0 16px;
+    margin: 24px auto;
+  }
+
+  .wishlist-header h1 {
+    font-size: 22px;
+  }
+
+  .wishlist-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+}
+
+@media (max-width: 400px) {
+  .wishlist-grid {
+    grid-template-columns: 1fr;
+  }
 }

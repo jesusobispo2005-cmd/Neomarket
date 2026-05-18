@@ -7,24 +7,28 @@
       <span class="brand-name">NeoMarket</span>
     </div>
 
-    <div class="nav-links">
-      <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+    <button class="hamburger" (click)="toggleMenu()">
+      {{ menuAbierto ? '✕' : '☰' }}
+    </button>
 
-      <a *ngIf="!isLoggedIn" routerLink="login" routerLinkActive="active">Login</a>
+    <div class="nav-links" [class.open]="menuAbierto">
+      <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="menuAbierto = false">Home</a>
 
-      <a *ngIf="isAdmin" routerLink="admin" routerLinkActive="active" class="admin-link">⚙️ Admin</a>
+      <a *ngIf="!isLoggedIn" routerLink="login" routerLinkActive="active" (click)="menuAbierto = false">Login</a>
 
-      <a routerLink="wishlist" class="icon-btn" routerLinkActive="active" title="Wishlist">
-        <span>❤️</span>
+      <a *ngIf="isAdmin" routerLink="admin" routerLinkActive="active" class="admin-link" (click)="menuAbierto = false">⚙️ Admin</a>
+
+      <a routerLink="wishlist" routerLinkActive="active" title="Wishlist" (click)="menuAbierto = false">
+        ❤️ Wishlist
         <span class="nav-badge" *ngIf="wishlistCount > 0">{{ wishlistCount }}</span>
       </a>
 
-      <a routerLink="carrito" class="icon-btn" routerLinkActive="active" title="Carrito">
-        <span>🛒</span>
+      <a routerLink="carrito" routerLinkActive="active" title="Carrito" (click)="menuAbierto = false">
+        🛒 Carrito
         <span class="nav-badge" *ngIf="cartCount > 0">{{ cartCount }}</span>
       </a>
 
-      <div *ngIf="isLoggedIn" routerLink="perfil" class="avatar" title="Mi perfil">U</div>
+      <div *ngIf="isLoggedIn" routerLink="perfil" class="avatar" title="Mi perfil" (click)="menuAbierto = false">U</div>
 
       <button *ngIf="isLoggedIn" class="logout-btn" (click)="logout()" title="Cerrar sesión">Cerrar Sesion</button>
     </div>
