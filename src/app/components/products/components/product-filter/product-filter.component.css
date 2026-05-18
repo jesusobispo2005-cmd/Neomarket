@@ -3,6 +3,7 @@
   gap: 10px;
   padding: 20px;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 input, select {
@@ -13,4 +14,26 @@ input, select {
 
 .buscador {
   width: 60%;
+}
+
+@media (max-width: 900px) {
+  .buscador {
+    width: 80%;
+  }
+}
+
+@media (max-width: 560px) {
+  .filter {
+    flex-direction: column;
+    padding: 12px;
+    align-items: stretch;
+  }
+
+  .buscador {
+    width: 100%;
+  }
+
+  input, select {
+    width: 100%;
+  }
 }
