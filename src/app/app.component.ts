@@ -3,11 +3,12 @@ import { RouterLink, RouterOutlet, RouterLinkActive, Router, NavigationEnd } fro
 import { CommonModule } from '@angular/common';
 import { CartService } from './services/cart.service';
 import { WishlistService } from './services/wishlist.service';
+import { ChatboxComponent } from './components/chatbox/chatbox.component';
 import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, CommonModule],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, CommonModule, ChatboxComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
@@ -25,27 +26,22 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Escucha cambios del carrito
     this.cartService.cart$.subscribe(() => {
       this.cartCount = this.cartService.getCount();
     });
 
-    // Escucha cambios de la wishlist
     this.wishlistService.wishlist$.subscribe(items => {
       this.wishlistCount = items.length;
     });
 
-    // Estado inicial de sesión
     this.isLoggedIn = !!localStorage.getItem('Token');
     this.isAdmin = localStorage.getItem('Admin') === 'true';
 
-    // Carga la wishlist si hay sesión activa al arrancar
     const email = localStorage.getItem('Email');
     if (email) {
       this.wishlistService.cargar(email);
     }
 
-    // Solo actualiza flags de sesión en cambios de ruta, sin recargar wishlist
     this.router.events.pipe(
       filter(e => e instanceof NavigationEnd)
     ).subscribe(() => {

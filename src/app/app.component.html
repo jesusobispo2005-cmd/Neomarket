@@ -10,28 +10,22 @@
     <div class="nav-links">
       <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
 
-      <!-- Solo si NO está logueado -->
       <a *ngIf="!isLoggedIn" routerLink="login" routerLinkActive="active">Login</a>
 
-      <!-- Solo si es Admin -->
       <a *ngIf="isAdmin" routerLink="admin" routerLinkActive="active" class="admin-link">⚙️ Admin</a>
 
-      <!-- Wishlist -->
       <a routerLink="wishlist" class="icon-btn" routerLinkActive="active" title="Wishlist">
         <span>❤️</span>
         <span class="nav-badge" *ngIf="wishlistCount > 0">{{ wishlistCount }}</span>
       </a>
 
-      <!-- Carrito -->
       <a routerLink="carrito" class="icon-btn" routerLinkActive="active" title="Carrito">
         <span>🛒</span>
         <span class="nav-badge" *ngIf="cartCount > 0">{{ cartCount }}</span>
       </a>
 
-      <!-- Avatar / perfil — solo si logueado -->
       <div *ngIf="isLoggedIn" routerLink="perfil" class="avatar" title="Mi perfil">U</div>
 
-      <!-- Logout — solo si logueado -->
       <button *ngIf="isLoggedIn" class="logout-btn" (click)="logout()" title="Cerrar sesión">Cerrar Sesion</button>
     </div>
 
@@ -40,3 +34,6 @@
   <router-outlet></router-outlet>
 
 </div>
+
+<!-- Chatbox flotante — visible en toda la app -->
+<app-chatbox></app-chatbox>
