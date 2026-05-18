@@ -1,14 +1,51 @@
-<h1>Editar perfil</h1>
-<form class="form border-line" (ngSubmit)="userEdit()">
-  <h3>Nombre</h3>
-  <input class="inputForm" type="text" name="Nombre" [(ngModel)]="Nombre" />
-  <h3>Apellidos</h3>
-  <input class="inputForm" type="text" name="Apellidos" [(ngModel)]="Apellidos" />
-  <h3>Telefono</h3>
-  <input class="inputForm" type="text" name="Telefono" [(ngModel)]="Telefono" />
-  <h3>Direccion</h3>
-  <input class="inputForm" type="text" name="Direccion" [(ngModel)]="Direccion" />
-  <h3>Birthdate</h3>
-  <input class="inputForm" type="text" name="Birthdate" [(ngModel)]="Birthdate" />
-  <button class="button-submit">Edit</button>
-</form>
+<div class="edit-page">
+  <section class="edit-header">
+    <div>
+      <p class="subtitle">Editar perfil</p>
+      <h1>Actualiza tu información</h1>
+      <p class="description">
+        Cambia tu nombre, contacto o datos de dirección y guarda los cambios para actualizar tu cuenta.
+      </p>
+    </div>
+    <div class="header-badge">Perfil</div>
+  </section>
+
+  <form class="edit-form" (ngSubmit)="userEdit()">
+    <div class="form-grid">
+      <label>
+        <span>Nombre</span>
+        <input type="text" name="Nombre" [(ngModel)]="Nombre" placeholder="Ingresa tu nombre" />
+      </label>
+
+      <label>
+        <span>Apellidos</span>
+        <input type="text" name="Apellidos" [(ngModel)]="Apellidos" placeholder="Ingresa tus apellidos" />
+      </label>
+
+      <label>
+        <span>Teléfono</span>
+        <input type="tel" name="Telefono" [(ngModel)]="Telefono" placeholder="Ingresa tu teléfono" />
+      </label>
+
+      <label>
+        <span>Email</span>
+        <input type="email" name="Email" [(ngModel)]="Email" placeholder="Ingresa tu email" />
+      </label>
+
+      <label>
+        <span>Dirección</span>
+        <input type="text" name="Direccion" [(ngModel)]="Direccion" placeholder="Ingresa tu dirección" />
+      </label>
+
+      <label>
+        <span>Fecha de nacimiento</span>
+        <input type="date" name="Birthdate" [(ngModel)]="Birthdate" />
+      </label>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="cancel-btn" (click)="router.navigate(['/perfil'])">Cancelar</button>
+      <button type="submit" class="save-btn">Guardar cambios</button>
+    </div>
+  </form>
+</div>

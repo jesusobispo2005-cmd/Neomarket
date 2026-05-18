@@ -11,7 +11,7 @@ import { EditPerfilService } from './edit-perfil.service';
   styleUrl: './edit-perfil.component.css',
 })
 export class EditPerfilComponent {
-  private router = inject(Router);
+  public router = inject(Router);
   constructor(private editPerfilService: EditPerfilService) {}
 
   Nombre = signal('');
@@ -23,20 +23,27 @@ export class EditPerfilComponent {
   Wishlist = signal([]);
   Cartera = signal(0);
   Birthdate = signal('');
+  Admin = signal(false);
 
   ngOnInit() {
-    this.editPerfilService.getByEmail(localStorage.getItem('Email')?.toString() || '').subscribe(
+    const email = localStorage.getItem('Email')?.toString() || '';
+    if (!email) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.editPerfilService.getByEmail(email).subscribe(
       (response: any) => {
-        // Reset form
         this.Nombre.set(response.Nombre || '');
         this.Apellidos.set(response.Apellidos || '');
         this.Telefono.set(response.Telefono || '');
         this.Email.set(response.Email || '');
-        this.Password.set(response.Password || '');
+        this.Password.set('');
         this.Direccion.set(response.Direccion || '');
         this.Wishlist.set(response.Wishlist || []);
         this.Cartera.set(response.Cartera || 0);
         this.Birthdate.set(response.Birthdate || '');
+        this.Admin.set(response.Admin === true);
         console.log('User data loaded successfully:', response);
       },
       (error: any) => {
@@ -51,11 +58,10 @@ export class EditPerfilComponent {
       Apellidos: this.Apellidos(),
       Telefono: this.Telefono(),
       Email: this.Email(),
-      Password: this.Password(),
       Direccion: this.Direccion(),
-      Admin: false,
-      Wishlist: [],
-      Cartera: 100,
+      Admin: this.Admin(),
+      Wishlist: this.Wishlist(),
+      Cartera: this.Cartera(),
       Birthdate: this.Birthdate(),
     };
 
@@ -69,6 +75,5 @@ export class EditPerfilComponent {
         console.error('Error updating user:', error);
       },
     );
-
   }
 }

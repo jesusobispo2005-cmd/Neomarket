@@ -6,6 +6,9 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LoginService {
   private api = 'http://localhost:3000/api/users';
+  private tokenKey = 'Token';
+  private emailKey = 'Email';
+  private adminKey = 'Admin';
 
   constructor(private http: HttpClient) {}
 
@@ -27,5 +30,34 @@ export class LoginService {
 
   delete(Email: string) {
     return this.http.delete(`${this.api}/${Email}`);
+  }
+
+
+  // Auth methods
+  
+  getToken(): string | null {
+    return localStorage.getItem(this.tokenKey);
+  }
+
+  setToken(token: string): void {
+    localStorage.setItem(this.tokenKey, token);
+  }
+
+  isAuthenticated(): boolean {
+    return !!this.getToken();
+  }
+
+  isAdmin(): boolean {
+    return localStorage.getItem(this.adminKey) === 'true';
+  }
+
+  getUserEmail(): string | null {
+    return localStorage.getItem(this.emailKey);
+  }
+
+  logout(): void {
+    localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem(this.emailKey);
+    localStorage.removeItem(this.adminKey);
   }
 }
