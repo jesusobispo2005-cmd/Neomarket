@@ -1,43 +1,175 @@
-.perfil-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  background-color: #ffffff;
-  padding: 30px;
-  width: 40%;
-  border-radius: 20px;
-  font-family:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
-    'Helvetica Neue', sans-serif;
-  margin-top: 20px;
-  justify-self: center;
-  gap: 20px;
+.perfil-page {
+  max-width: 960px;
+  margin: 32px auto;
+  padding: 0 20px 40px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.perfil-btn {
+.perfil-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 28px;
+  border-radius: 28px;
+  background: linear-gradient(135deg, #111827, #1e293b);
+  color: #f8fafc;
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.18);
+}
+
+.perfil-avatar {
+  min-width: 84px;
+  min-height: 84px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7c3aed, #6366f1);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 14px 30px rgba(99, 102, 241, 0.25);
+}
+
+.perfil-avatar span {
+  font-size: 34px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.perfil-header-copy {
   flex: 1;
-  padding: 14px;
-  background: #1a7abf;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 600;
-  transition: 0.3s;
+}
+
+.subtitle {
+  margin: 0 0 8px;
+  font-size: 12px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #cbd5e1;
+}
+
+.perfil-header-copy h1 {
+  margin: 0;
+  font-size: 2.4rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.profile-description {
+  margin: 16px 0 0;
+  color: #cbd5e1;
+  line-height: 1.7;
+  max-width: 640px;
+}
+
+.status-tags {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.12);
+  color: #f8fafc;
+}
+
+.status-chip.secondary {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.perfil-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 28px;
+}
+
+.perfil-card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+}
+
+.section-title {
+  margin: 0 0 22px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.card-row {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 16px;
+  padding: 14px 0;
+  align-items: center;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+}
+
+.card-row:last-child {
+  border-bottom: none;
+}
+
+.card-row span {
+  font-size: 14px;
+  color: #475569;
+  font-weight: 700;
+}
+
+.card-row strong {
+  font-size: 15px;
+  color: #0f172a;
+  word-break: break-word;
 }
 
 .actions {
   display: flex;
-  gap: 20px;
-  width: 500px;
+  justify-content: flex-end;
+  margin-top: 26px;
+}
+
+.perfil-btn {
+  background: linear-gradient(135deg, #7c3aed, #6366f1);
+  color: #ffffff;
+  border: none;
+  border-radius: 16px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  box-shadow: 0 14px 30px rgba(99, 102, 241, 0.24);
 }
 
 .perfil-btn:hover {
-  background: #155f99;
+  transform: translateY(-2px);
+  box-shadow: 0 18px 34px rgba(99, 102, 241, 0.32);
 }
 
 .perfil-btn:disabled {
-  background: #ccc;
+  opacity: 0.65;
   cursor: not-allowed;
 }
+
+@media (max-width: 860px) {
+  .perfil-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .perfil-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .actions {
+    justify-content: center;
+  }
+}
+

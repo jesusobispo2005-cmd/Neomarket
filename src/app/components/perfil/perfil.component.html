@@ -1,17 +1,59 @@
-<div class="perfil-container">
-  <h1>Perfil</h1>
-  <h3>Nombre</h3>
-  <p name="Nombre" placeholder="Name">{{ Nombre() }}</p>
-  <h3>Apellidos</h3>
-  <p name="Apellidos" placeholder="Surname">{{ Apellidos() }}</p>
-  <h3>Telefono</h3>
-  <p name="Telefono" placeholder="Phone number">{{ Telefono() }}</p>
-  <h3>Email</h3>
-  <p name="Email" placeholder="Email">{{ Email() }}</p>
-  <h3>Direccion</h3>
-  <p name="Direccion" placeholder="Address">{{ Direccion() }}</p>
-  <h3>Birthdate</h3>
-  <p name="Birthdate" placeholder="Birthdate">{{ Birthdate() }}</p>
+<div class="perfil-page">
+  <div class="perfil-header">
+    <div class="perfil-avatar">
+      <span>{{ Nombre() ? Nombre().charAt(0) : 'U' }}</span>
+    </div>
+    <div class="perfil-header-copy">
+      <p class="subtitle">Mi cuenta</p>
+      <h1>Hola, {{ Nombre() || 'Usuario' }}!</h1>
+      <p class="profile-description">
+        Aquí puedes ver tus datos personales y acceder al editor para actualizarlos cuando quieras.
+      </p>
+      <div class="status-tags">
+        <span class="status-chip">{{ Admin() ? 'Administrador' : 'Usuario' }}</span>
+        <span class="status-chip secondary">{{ Email() }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="perfil-grid">
+    <section class="perfil-card">
+      <p class="section-title">Información personal</p>
+      <div class="card-row">
+        <span>Nombre</span>
+        <strong>{{ Nombre() }}</strong>
+      </div>
+      <div class="card-row">
+        <span>Apellidos</span>
+        <strong>{{ Apellidos() }}</strong>
+      </div>
+      <div class="card-row">
+        <span>Teléfono</span>
+        <strong>{{ Telefono() }}</strong>
+      </div>
+      <div class="card-row">
+        <span>Dirección</span>
+        <strong>{{ Direccion() }}</strong>
+      </div>
+    </section>
+
+    <section class="perfil-card">
+      <p class="section-title">Detalles de la cuenta</p>
+      <div class="card-row">
+        <span>Email</span>
+        <strong>{{ Email() }}</strong>
+      </div>
+      <div class="card-row">
+        <span>Birthdate</span>
+        <strong>{{ Birthdate() }}</strong>
+      </div>
+      <div class="card-row">
+        <span>Rol</span>
+        <strong *ngIf="isAdmin">Administrador</strong>
+        <strong *ngIf="!isAdmin">Usuario regular</strong>
+      </div>
+    </section>
+  </div>
 
   <div class="actions">
     <button (click)="goEdit()" class="perfil-btn">Editar perfil</button>
