@@ -33,6 +33,7 @@ export class WishlistComponent implements OnInit {
     this.wishlistService.wishlist$.subscribe(lista => {
       this.items = lista;
     });
+    this.wishlistService.cargar(email);
   }
 
   quitar(productId: string) {

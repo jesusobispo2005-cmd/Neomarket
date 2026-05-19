@@ -37,13 +37,42 @@ export class ProductCardComponent implements OnInit, OnDestroy {
     this.router.navigate(['/producto', this.product._id]);
   }
 
-  toggleWishlist(event: Event) {
+  async toggleWishlist(event: Event) {
     event.stopPropagation();
     const email = localStorage.getItem('Email');
     if (!email) {
       this.router.navigate(['/login']);
       return;
     }
-    this.wishlistService.toggle(email, this.product);
+    await this.wishlistService.getByEmail(localStorage.getItem('Email') || '').subscribe(
+      (response: any) => {
+        // Reset form
+        console.log('Wishlist response:', response.Wishlist);
+        this.wishlistService.wishlistSubject.next(response.Wishlist || []);
+
+        let fakeWishlist = this.wishlistService.wishlistSubject.value;
+        console.log('First Wishlist:', fakeWishlist);
+        fakeWishlist.push(this.product);
+        console.log('Current Wishlist:', fakeWishlist);
+        this.wishlistService.wishlistSubject.next(fakeWishlist);
+
+        this.wishlistService
+          .updateWishlist(localStorage.getItem('Email') || '', { Wishlist: this.wishlistService.wishlistSubject.value })
+          .subscribe(
+            (response: any) => {
+              console.log('Wishlist updated successfully:', response);
+            },
+            (error: any) => {
+              console.error('Something wrong:', error);
+            },
+          );
+
+        event.stopPropagation();
+        this.wishlistService.toggle(localStorage.getItem('Email') || '', this.product);
+      },
+      (error: any) => {
+        console.error('Something wrong:', error);
+      },
+    );
   }
 }

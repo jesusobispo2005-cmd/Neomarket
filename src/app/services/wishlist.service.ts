@@ -7,7 +7,7 @@ import { tap } from 'rxjs/operators';
 export class WishlistService {
 
   private api = 'http://localhost:3000/api/users';
-  private wishlistSubject = new BehaviorSubject<any[]>([]);
+  wishlistSubject = new BehaviorSubject<any[]>([]);
   wishlist$ = this.wishlistSubject.asObservable();
 
   constructor(private http: HttpClient) {}
@@ -67,4 +67,13 @@ export class WishlistService {
   limpiar(): void {
     this.wishlistSubject.next([]);
   }
+
+  getByEmail(Email: string) {
+    return this.http.get(`${this.api}/${Email}`);
+  }
+
+  updateWishlist(Email: string, data: any) {
+    return this.http.put(`${this.api}/${Email}/wishlist`, data);
+  }
+  
 }
