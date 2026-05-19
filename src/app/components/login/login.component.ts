@@ -2,7 +2,8 @@ import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LoginService } from './login.service';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
+import { WishlistService } from '../../services/wishlist.service';
 
 @Component({
   selector: 'app-login',
@@ -13,8 +14,7 @@ import {Router} from '@angular/router';
 export class LoginComponent {
   private router = inject(Router);
 
-  constructor(private loginService: LoginService) {}
-  
+  constructor(private loginService: LoginService, private wishlistService: WishlistService) {}
 
   Nombre = signal('');
   Apellidos = signal('');
@@ -40,7 +40,6 @@ export class LoginComponent {
     this.loginService.register(userData).subscribe(
       (response: any) => {
         console.log('Registration successful:', response);
-        // Reset form
         this.Nombre.set('');
         this.Apellidos.set('');
         this.Telefono.set('');
@@ -65,13 +64,13 @@ export class LoginComponent {
     this.loginService.login(loginData).subscribe(
       (response: any) => {
         console.log('Login successful:', response);
-        // Handle successful login, e.g., store token, redirect, etc.
         localStorage.setItem('Token', response.token);
         localStorage.setItem('Email', response.foundUser.Email);
         localStorage.setItem('Admin', response.foundUser.Admin.toString());
-        console.log('Token stored in localStorage:', localStorage.getItem('Token'));
-        console.log('Email stored in localStorage:', localStorage.getItem('Email'));
-        console.log('Admin status stored in localStorage:', localStorage.getItem('Admin'));
+
+        // Cargar la wishlist del usuario recién logueado
+        this.wishlistService.cargar(response.foundUser.Email);
+
         window.alert('Login successful! Welcome back.');
         this.router.navigate(['/']);
       },
