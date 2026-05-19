@@ -14,6 +14,7 @@ export class ProductFilterComponent {
 
   searchText: string = '';
   category: string = '';
+  categorias = ['Electronica', 'Ropa', 'Hogar', 'Deportes', 'Libros', 'Juguetes', 'Otros'];
 
   @Output() filterChange = new EventEmitter<{ search: string; category: string }>();
 

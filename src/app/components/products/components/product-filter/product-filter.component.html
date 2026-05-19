@@ -13,9 +13,7 @@
     (change)="onCategoryChange()"
   >
     <option value="">Todas</option>
-    <option value="ropa">Ropa</option>
-    <option value="electronica">Electrónica</option>
-    <option value="hogar">Hogar</option>
+    <option *ngFor="let cat of categorias" [value]="cat">{{ cat }}</option>
   </select>
 
 </div>
